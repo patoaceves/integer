@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico de Seguridad — Integer</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0E1A;
+  --bg2:#0D1220;
+  --card:#111827;
+  --card2:#131A2E;
+  --orange:#FF6B2B;
+  --cyan:#00D4FF;
+  --green:#00C878;
+  --yellow:#FFA01E;
+  --red:#FF5050;
+  --text:#F0F4FF;
+  --muted:#7A90B5;
+  --dim:#4E6080;
+  --border:rgba(255,255,255,.07);
+  --font:-apple-system,'Segoe UI',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px}
+.app{width:100%;max-width:860px}
+
+/* ── SHARED ── */
+.screen{animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:40px}
+.logo-box{width:34px;height:34px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff;flex-shrink:0}
+.logo-name{font-size:19px;font-weight:700;color:var(--text)}
+.eyebrow{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);background:rgba(255,107,43,.1);border:1px solid rgba(255,107,43,.22);padding:4px 12px;border-radius:20px;margin-bottom:18px}
+.btn{background:var(--orange);color:#fff;border:none;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,transform .1s;font-family:var(--font)}
+.btn:hover{background:#e85e22}
+.btn:active{transform:scale(.98)}
+.btn-full{width:100%}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.1);padding:10px 18px;border-radius:8px;font-size:13px;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.25)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
+.cardtitle{font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px}
+
+/* ── INTRO ── */
+#intro-screen{max-width:560px;margin:0 auto;padding-top:20px}
+.h1{font-size:36px;font-weight:700;letter-spacing:-.8px;line-height:1.15;margin-bottom:14px}
+.h1 b{color:var(--orange)}
+.sub{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:36px;max-width:440px}
+.meta-row{display:flex;align-items:center;gap:14px;margin-top:14px;font-size:12px;color:var(--dim)}
+.meta-dot{width:3px;height:3px;border-radius:50%;background:#2A3550}
+
+/* ── PROFILE ── */
+#profile-screen{max-width:560px;margin:0 auto;padding-top:20px}
+.slabel{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.pcol{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.pcard{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;cursor:pointer;transition:border-color .18s,background .18s,transform .1s;display:flex;align-items:center;gap:14px}
+.pcard:hover{border-color:rgba(255,107,43,.5);background:rgba(255,107,43,.06)}
+.pcard:active{transform:scale(.99)}
+.picon{width:38px;height:38px;border-radius:9px;background:rgba(255,107,43,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pinfo{flex:1;min-width:0}
+.plabel{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.pdesc{font-size:11px;color:var(--dim)}
+.parrow{color:var(--dim);font-size:16px}
+
+/* ── QUIZ ── */
+#quiz-screen{max-width:640px;margin:0 auto;padding-top:20px}
+.quiz-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.prog-wrap{width:100%;height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin-bottom:24px;overflow:hidden}
+.prog-fill{height:100%;background:var(--orange);border-radius:2px;transition:width .4s ease}
+.qmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cat-badge{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--cyan);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);padding:3px 10px;border-radius:10px}
+.qctr{font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
+.qtext{font-size:20px;font-weight:600;line-height:1.35;color:var(--text);margin-bottom:24px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.opt{background:var(--card2);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px 18px;cursor:pointer;font-size:13px;color:var(--muted);line-height:1.4;text-align:left;transition:border-color .15s,background .15s,color .15s,transform .1s;width:100%;font-family:var(--font)}
+.opt:hover{border-color:rgba(255,107,43,.5);background:rgba(255,107,43,.07);color:var(--text)}
+.opt:active{transform:scale(.99)}
+.qnav{display:flex;align-items:center;gap:10px}
+
+/* ── DASHBOARD ── */
+#dash-screen{padding-top:10px}
+.db-hdr{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
+.db-logo{width:30px;height:30px;background:var(--orange);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;flex-shrink:0}
+.db-logoname{font-size:17px;font-weight:700}
+.db-sep{width:1px;height:20px;background:rgba(255,255,255,.1)}
+.db-company{font-size:13px;color:var(--muted)}
+.db-company b{color:var(--text);font-weight:600}
+.db-spacer{flex:1}
+.db-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.db-grid{grid-template-columns:1fr}}
+.db-full{grid-column:1/-1}
+
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bname{font-size:11px;color:var(--muted);min-width:120px}
+.bwrap{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.bfill{height:100%;border-radius:3px;transition:width 1s ease}
+.bpct{font-size:11px;color:var(--text);min-width:32px;text-align:right;font-variant-numeric:tabular-nums}
+.threat-item{border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:10px}
+.threat-item:last-child{margin-bottom:0}
+.threat-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.threat-rank{width:22px;height:22px;border-radius:5px;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.threat-name{font-size:13px;font-weight:600;color:var(--text);flex:1}
+.threat-score{font-size:12px;font-weight:700}
+.threat-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-left:30px}
+.heat-hdr{display:grid;grid-template-columns:110px repeat(3,1fr);gap:6px;margin-bottom:6px}
+.heat-hdr-lbl{font-size:10px;color:var(--dim);text-align:center;font-weight:600}
+.heat-row{display:grid;grid-template-columns:110px repeat(3,1fr);gap:6px;align-items:center;margin-bottom:6px}
+.heat-cat{font-size:11px;color:var(--muted)}
+.heat-cell{border-radius:6px;padding:6px 4px;text-align:center;font-size:11px;font-weight:700}
+.bmark-legend{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.bmark-legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--dim)}
+.bmark-dot{width:8px;height:8px;border-radius:2px}
+.bmark-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.bmark-lbl{font-size:11px;color:var(--muted);min-width:106px}
+.bmark-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;position:relative}
+.bmark-fill{height:100%;border-radius:3px}
+.bmark-marker{position:absolute;top:-4px;width:2px;height:14px;border-radius:1px}
+.bmark-vals{display:flex;align-items:center;gap:5px}
+.bmark-val{font-size:11px;font-weight:700;min-width:30px;text-align:right}
+.road-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+@media(max-width:600px){.road-steps{grid-template-columns:1fr}}
+.road-step{border:1px solid var(--border);border-radius:10px;padding:14px}
+.road-phase{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.road-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:5px;line-height:1.3}
+.road-desc{font-size:11px;color:var(--muted);line-height:1.55}
+.road-cta{background:var(--card2);border:1px solid rgba(255,107,43,.22);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.road-cta-text{flex:1;min-width:200px}
+.road-cta-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.road-cta-sub{font-size:11px;color:var(--muted);line-height:1.55}
+.restart-row{text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="app" id="root"></div>
+
+<script>
+const O=(t,s)=>({t,s});
+
+const ICONS={
+  manufactura:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`,
+  corporativo:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9M9 15h-3M9 12h-3"/></svg>`,
+  retail:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`,
+  logistica:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`,
+  otros:`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF6B2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`
+};
+
+const PROFILES=[
+  {id:'manufactura',label:'Manufactura / Industria',desc:'Plantas, maquiladoras, almacenes de producción'},
+  {id:'corporativo',label:'Corporativo / Oficinas',desc:'Servicios, despachos, sedes administrativas'},
+  {id:'retail',label:'Retail / Comercio',desc:'Tiendas, centros de distribución, puntos de venta'},
+  {id:'logistica',label:'Logística / Transporte',desc:'Flotillas, almacenes, cadena de suministro'},
+  {id:'otros',label:'Otros',desc:'Cualquier tipo de organización'},
+];
+
+const CAT={perimetro:'Perímetro',acceso:'Control de Acceso',fuerza:'Fuerza de Seguridad',cctv:'CCTV / Alarmas',rrhh:'Recursos Humanos',emergencias:'Emergencias'};
+
+const COMMON=[
+  {id:'c1',cat:'perimetro',q:'¿Las instalaciones cuentan con delimitación física claramente definida?',opts:[O('Sí, barda sólida',1),O('Sí, cerca o reja',.67),O('Parcialmente',.33),O('No',0)]},
+  {id:'c2',cat:'perimetro',q:'¿Existe iluminación exterior perimetral durante la noche?',opts:[O('Sí, todo el perímetro',1),O('Sí, áreas principales',.6),O('Parcialmente',.3),O('No',0)]},
+  {id:'c3',cat:'acceso',q:'¿Se controla el acceso de visitantes y proveedores con registro formal?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c4',cat:'acceso',q:'¿El personal utiliza credenciales o identificación para ingresar?',opts:[O('Sí, tarjeta o biométrico',1),O('Sí, gafete visual',.5),O('No',0)]},
+  {id:'c5',cat:'acceso',q:'¿Existe un punto de acceso único y controlado para vehículos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c6',cat:'fuerza',q:'¿Cuenta con personal de seguridad privada asignado?',opts:[O('Sí, 24/7',1),O('Sí, horario parcial',.5),O('No',0)]},
+  {id:'c7',cat:'fuerza',q:'¿El personal de seguridad cuenta con capacitación documentada?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c8',cat:'cctv',q:'¿La instalación cuenta con sistema de videovigilancia (CCTV)?',opts:[O('Sí, monitoreo en tiempo real',1),O('Sí, solo grabación',.5),O('No',0)]},
+  {id:'c9',cat:'cctv',q:'¿Las cámaras cubren accesos y áreas críticas?',opts:[O('Sí, todos',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c10',cat:'cctv',q:'¿Cuenta con sistema de alarma contra intrusión?',opts:[O('Sí, con monitoreo externo',1),O('Sí, solo local',.6),O('No',0)]},
+  {id:'c11',cat:'rrhh',q:'¿Se realizan estudios de confiabilidad o antecedentes al personal nuevo?',opts:[O('Sí, siempre',1),O('En algunos casos',.5),O('No',0)]},
+  {id:'c12',cat:'rrhh',q:'¿Existe un protocolo de baja segura para empleados que dejan la empresa?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c13',cat:'emergencias',q:'¿La empresa cuenta con un plan de emergencias documentado?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
+  {id:'c14',cat:'emergencias',q:'¿Se realizan simulacros de seguridad con el personal?',opts:[O('Sí, periódicamente',1),O('Sí, alguna vez',.5),O('No',0)]},
+  {id:'c15',cat:'emergencias',q:'¿Existe comunicación formal con autoridades de seguridad locales?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+];
+
+const PQ={
+  manufactura:[
+    {id:'m1',cat:'acceso',q:'¿Existen zonas de producción con acceso restringido diferenciado?',opts:[O('Sí, control estricto',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m2',cat:'acceso',q:'¿Se controla el ingreso y egreso de materiales y materias primas?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m3',cat:'acceso',q:'¿Se realizan inventarios físicos periódicos para detectar mermas?',opts:[O('Sí, frecuentemente',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'m4',cat:'acceso',q:'¿Los proveedores y contratistas tienen acceso supervisado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m5',cat:'emergencias',q:'¿Existen protocolos para manejo de materiales peligrosos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No aplica',.8),O('No',0)]},
+    {id:'m6',cat:'fuerza',q:'¿Las áreas de carga y descarga tienen supervisión de seguridad?',opts:[O('Sí, siempre',1),O('A veces',.5),O('No',0)]},
+    {id:'m7',cat:'perimetro',q:'¿Se cuenta con iluminación adecuada en patios y bodegas?',opts:[O('Sí, todas las áreas',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m8',cat:'emergencias',q:'¿Se documentan los incidentes de seguridad ocurridos en planta?',opts:[O('Sí, todos',1),O('Algunos',.5),O('No',0)]},
+    {id:'m9',cat:'acceso',q:'¿Existe control de herramientas y equipos de alto valor?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m10',cat:'acceso',q:'¿El personal de distintas áreas tiene acceso delimitado por zona?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m11',cat:'fuerza',q:'¿Se realizan revisiones de salida al personal operativo?',opts:[O('Sí, siempre',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'m12',cat:'emergencias',q:'¿Existe protocolo de respuesta ante robo o siniestro en planta?',opts:[O('Sí, documentado',1),O('En proceso',.5),O('No',0)]},
+    {id:'m13',cat:'emergencias',q:'¿Los activos cuentan con seguro contra robo o siniestro?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m14',cat:'fuerza',q:'¿Los accesos en turnos nocturnos tienen refuerzo de seguridad?',opts:[O('Sí',1),O('Igual que diurno',.5),O('No',0)]},
+    {id:'m15',cat:'perimetro',q:'¿Se realizan recorridos perimetrales con bitácora de forma regular?',opts:[O('Sí, con registro',1),O('Sí, sin registro',.5),O('No',0)]},
+  ],
+  corporativo:[
+    {id:'co1',cat:'rrhh',q:'¿Existen políticas documentadas de seguridad de la información?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
+    {id:'co2',cat:'acceso',q:'¿El acceso a servidores o cuartos de datos está físicamente restringido?',opts:[O('Sí',1),O('Parcialmente',.5),O('No aplica',.8),O('No',0)]},
+    {id:'co3',cat:'acceso',q:'¿Se controla el uso de dispositivos externos en equipos corporativos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co4',cat:'acceso',q:'¿Los visitantes son acompañados en todo momento dentro de las instalaciones?',opts:[O('Sí',1),O('Solo en áreas sensibles',.6),O('No',0)]},
+    {id:'co5',cat:'acceso',q:'¿El edificio cuenta con lobby o recepción con filtro de acceso?',opts:[O('Sí, con control formal',1),O('Sí, sin control',.4),O('No',0)]},
+    {id:'co6',cat:'fuerza',q:'¿Se tiene protocolo ante visitas de alto perfil o situaciones de amenaza?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
+    {id:'co7',cat:'perimetro',q:'¿El estacionamiento y accesos vehiculares tienen seguridad?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co8',cat:'acceso',q:'¿Las áreas directivas tienen control de acceso diferenciado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co9',cat:'acceso',q:'¿Se realizan auditorías de acceso (quién entró, cuándo, a qué área)?',opts:[O('Sí, regularmente',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'co10',cat:'emergencias',q:'¿El personal tiene protocolo ante amenaza interna (robo, extorsión)?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co11',cat:'emergencias',q:'¿Existe un directorio de contactos de emergencia actualizado?',opts:[O('Sí',1),O('Desactualizado',.4),O('No',0)]},
+    {id:'co12',cat:'rrhh',q:'¿Se realizan evaluaciones de riesgo para personal directivo?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'co13',cat:'rrhh',q:'¿Las políticas de seguridad son comunicadas formalmente a todo el personal?',opts:[O('Sí, periódicamente',1),O('Solo al ingreso',.5),O('No',0)]},
+    {id:'co14',cat:'rrhh',q:'¿Se cuenta con protocolo ante pérdida de dispositivos corporativos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co15',cat:'emergencias',q:'¿El edificio tiene plan de evacuación actualizado y señalizado?',opts:[O('Sí',1),O('Desactualizado',.4),O('No',0)]},
+  ],
+  retail:[
+    {id:'r1',cat:'acceso',q:'¿Existe un programa formal de prevención de pérdidas?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
+    {id:'r2',cat:'cctv',q:'¿Las áreas de caja y efectivo tienen supervisión directa o por CCTV?',opts:[O('Sí, ambas',1),O('Solo una',.5),O('No',0)]},
+    {id:'r3',cat:'acceso',q:'¿Se realizan arqueos o conteos de caja de forma regular?',opts:[O('Sí, diariamente',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'r4',cat:'rrhh',q:'¿El personal tiene capacitación para identificar comportamientos sospechosos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r5',cat:'cctv',q:'¿Existen dispositivos antirrobo o espejos en áreas de productos?',opts:[O('Sí, en toda la tienda',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r6',cat:'fuerza',q:'¿El traslado de efectivo tiene protocolo de seguridad?',opts:[O('Sí, empresa especializada',1),O('Sí, personal interno',.6),O('No hay protocolo',0)]},
+    {id:'r7',cat:'acceso',q:'¿El acceso a bodegas y almacenamiento está controlado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r8',cat:'emergencias',q:'¿Existe protocolo ante robo en tienda (asalto, hurto)?',opts:[O('Sí, documentado',1),O('Conocido informalmente',.5),O('No',0)]},
+    {id:'r9',cat:'acceso',q:'¿Se revisan artículos devueltos para evitar fraudes?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No aplica',.8),O('No',0)]},
+    {id:'r10',cat:'fuerza',q:'¿La apertura y cierre del establecimiento tienen protocolo de seguridad?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r11',cat:'acceso',q:'¿Se realizan inventarios frecuentes para detectar robo hormiga?',opts:[O('Sí, mensual o más',1),O('Trimestral',.6),O('Raramente',.2)]},
+    {id:'r12',cat:'fuerza',q:'¿El personal de seguridad es visible activamente en el piso de ventas?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No hay personal',0)]},
+    {id:'r13',cat:'perimetro',q:'¿Existe iluminación adecuada en todas las áreas del establecimiento?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r14',cat:'fuerza',q:'¿Se realizan revisiones de salida al personal al término de turno?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'r15',cat:'emergencias',q:'¿El establecimiento tiene comunicación directa con policía o emergencias?',opts:[O('Sí, número directo',1),O('Solo 911',.5),O('No hay protocolo',0)]},
+  ],
+  logistica:[
+    {id:'l1',cat:'cctv',q:'¿Los vehículos cuentan con rastreo GPS activo?',opts:[O('Sí, toda la flotilla',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l2',cat:'fuerza',q:'¿Se realizan revisiones de seguridad a los vehículos antes de cada salida?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'l3',cat:'fuerza',q:'¿Existe comunicación periódica entre operadores y base durante las rutas?',opts:[O('Sí, contacto periódico',1),O('Solo ante incidentes',.5),O('No',0)]},
+    {id:'l4',cat:'emergencias',q:'¿Se analizan las rutas para identificar zonas de riesgo?',opts:[O('Sí, regularmente',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'l5',cat:'rrhh',q:'¿Los operadores tienen capacitación ante situaciones de riesgo en tránsito?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l6',cat:'emergencias',q:'¿Existe protocolo claro ante robo o asalto en tránsito?',opts:[O('Sí, documentado',1),O('Conocido informalmente',.5),O('No',0)]},
+    {id:'l7',cat:'acceso',q:'¿La carga es asegurada y verificada antes de salir de instalaciones?',opts:[O('Sí, siempre',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'l8',cat:'acceso',q:'¿Se controla quién tiene acceso a los vehículos y a las llaves?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l9',cat:'emergencias',q:'¿Los vehículos cuentan con seguro vigente contra robo y siniestro?',opts:[O('Sí, todos',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l10',cat:'emergencias',q:'¿Se documentan todos los incidentes ocurridos durante traslados?',opts:[O('Sí',1),O('Algunos',.5),O('No',0)]},
+    {id:'l11',cat:'rrhh',q:'¿Se realizan verificaciones de antecedentes a los operadores?',opts:[O('Sí, siempre',1),O('En algunos casos',.5),O('No',0)]},
+    {id:'l12',cat:'acceso',q:'¿El centro de distribución tiene control de acceso para vehículos externos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l13',cat:'cctv',q:'¿Los vehículos cuentan con sistema de alerta o botón de pánico?',opts:[O('Sí, en todos',1),O('En algunos',.5),O('No',0)]},
+    {id:'l14',cat:'acceso',q:'¿Se verifican sellos o precintos de seguridad durante el trayecto?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No aplica',.8),O('No',0)]},
+    {id:'l15',cat:'emergencias',q:'¿Existe coordinación con autoridades para rutas de alto riesgo?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+  ],
+  otros:[
+    {id:'ot1',cat:'emergencias',q:'¿La organización ha sufrido algún incidente de seguridad en los últimos 12 meses?',opts:[O('No',1),O('Sí, menor',.5),O('Sí, significativo',0)]},
+    {id:'ot2',cat:'rrhh',q:'¿Existe una política de seguridad formal y documentada?',opts:[O('Sí, actualizada',1),O('Desactualizada',.4),O('No existe',0)]},
+    {id:'ot3',cat:'rrhh',q:'¿El personal conoce los protocolos básicos de seguridad y emergencias?',opts:[O('Sí, todo el personal',1),O('Algunos',.5),O('No',0)]},
+    {id:'ot4',cat:'acceso',q:'¿Se cuenta con alguna forma de control de acceso a las instalaciones?',opts:[O('Sí, electrónico/biométrico',1),O('Sí, manual',.5),O('No',0)]},
+    {id:'ot5',cat:'cctv',q:'¿Las instalaciones cuentan con videovigilancia?',opts:[O('Sí, con monitoreo',1),O('Sí, solo grabación',.5),O('No',0)]},
+    {id:'ot6',cat:'perimetro',q:'¿Existe iluminación perimetral en la noche?',opts:[O('Sí, completa',1),O('Parcial',.5),O('No',0)]},
+    {id:'ot7',cat:'rrhh',q:'¿Se realizan verificaciones de antecedentes al personal nuevo?',opts:[O('Sí, siempre',1),O('Algunas veces',.5),O('No',0)]},
+    {id:'ot8',cat:'fuerza',q:'¿Existe un responsable de seguridad designado dentro de la organización?',opts:[O('Sí, dedicado',1),O('Sí, función adicional',.6),O('No',0)]},
+    {id:'ot9',cat:'emergencias',q:'¿Se realizan auditorías o evaluaciones de seguridad periódicas?',opts:[O('Sí, anual o más frecuente',1),O('Raramente',.4),O('Nunca',0)]},
+    {id:'ot10',cat:'acceso',q:'¿Los activos de valor tienen protección específica?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'ot11',cat:'emergencias',q:'¿La organización cuenta con seguros vigentes contra robo o siniestro?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'ot12',cat:'emergencias',q:'¿Existe comunicación establecida con autoridades de seguridad locales?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'ot13',cat:'acceso',q:'¿Se controla formalmente el acceso de visitantes y proveedores?',opts:[O('Sí',1),O('Informalmente',.5),O('No',0)]},
+    {id:'ot14',cat:'rrhh',q:'¿El personal con acceso a activos críticos tiene perfil de riesgo evaluado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'ot15',cat:'emergencias',q:'¿La empresa tiene un plan de continuidad ante un incidente de seguridad?',opts:[O('Sí, documentado',1),O('En proceso',.5),O('No',0)]},
+  ],
+};
+
+const BENCHMARK={
+  manufactura:{perimetro:72,acceso:65,fuerza:60,cctv:68,rrhh:58,emergencias:64},
+  corporativo:{perimetro:65,acceso:70,fuerza:58,cctv:65,rrhh:62,emergencias:68},
+  retail:{perimetro:68,acceso:62,fuerza:64,cctv:70,rrhh:55,emergencias:60},
+  logistica:{perimetro:62,acceso:60,fuerza:68,cctv:72,rrhh:58,emergencias:66},
+  otros:{perimetro:60,acceso:58,fuerza:55,cctv:60,rrhh:52,emergencias:58},
+};
+const INTL={perimetro:80,acceso:78,fuerza:74,cctv:80,rrhh:72,emergencias:76};
+
+const LEVELS={
+  robusto:{label:'Robusto',bg:'rgba(0,180,100,.14)',br:'rgba(0,180,100,.3)',color:'#00C878'},
+  moderado:{label:'Moderado',bg:'rgba(0,212,255,.1)',br:'rgba(0,212,255,.25)',color:'#00D4FF'},
+  elevado:{label:'Elevado',bg:'rgba(255,160,30,.12)',br:'rgba(255,160,30,.3)',color:'#FFA01E'},
+  critico:{label:'Crítico',bg:'rgba(255,80,80,.12)',br:'rgba(255,80,80,.3)',color:'#FF5050'},
+};
+const CTAS={
+  robusto:{t:'Mantener este nivel requiere revisión continua',d:'Su operación demuestra controles sólidos. Podemos ayudarle a documentar, certificar y blindar su postura de seguridad frente a auditorías y socios estratégicos.'},
+  moderado:{t:'Su operación tiene una base identificada con oportunidades de mejora',d:'Existen brechas específicas que un adversario podría aprovechar. Podemos desarrollar una estrategia de seguridad a medida para cerrarlas proactivamente.'},
+  elevado:{t:'Se identificaron vulnerabilidades que requieren atención prioritaria',d:'Este diagnóstico revela áreas con exposición significativa. Nuestro equipo puede elaborar un plan de acción específico y estructurado para su organización.'},
+  critico:{t:'Este diagnóstico identifica áreas que requieren atención inmediata',d:'Los resultados señalan vulnerabilidades críticas en su operación. Recomendamos iniciar un proceso de evaluación profesional a la brevedad.'},
+};
+const THREATS_DESC={
+  perimetro:{infra:'Deficiencias en barrera física y/o iluminación perimetral.',proc:'Sin recorridos ni bitácoras de verificación perimetral.',pers:'Personal sin protocolo de vigilancia perimetral estructurado.'},
+  acceso:{infra:'Puntos de acceso sin control diferenciado por zona.',proc:'Sin registro formal de visitantes, proveedores o contratistas.',pers:'Credenciales de acceso sin política de renovación ni auditoría.'},
+  fuerza:{infra:'Cobertura insuficiente en áreas críticas de la operación.',proc:'Sin protocolos documentados para situaciones de riesgo.',pers:'Personal sin capacitación certificada ni supervisión estructurada.'},
+  cctv:{infra:'Cobertura parcial de cámaras en accesos y zonas clave.',proc:'Sin monitoreo activo ni protocolo de revisión de grabaciones.',pers:'Sin sistema de alarma conectado a respuesta externa.'},
+  rrhh:{infra:'Sin sistema de control de acceso por perfil de riesgo.',proc:'Sin estudios de confiabilidad al ingreso ni periódicos.',pers:'Sin protocolo de baja segura para personal saliente.'},
+  emergencias:{infra:'Plan de emergencias desactualizado o inexistente.',proc:'Sin simulacros ni comunicación formal con autoridades.',pers:'Personal sin conocimiento de protocolos ante incidentes.'},
+};
+
+let STATE={screen:'intro',profile:null,questions:[],qi:0,answers:{}};
+
+function calcScores(pid,ans,qs){
+  const cats=Object.keys(CAT),cs={};
+  cats.forEach(c=>{
+    const cqs=qs.filter(q=>q.cat===c);
+    cs[c]=cqs.length?Math.round(cqs.reduce((a,q)=>a+(ans[q.id]??0),0)/cqs.length*100):0;
+  });
+  const ov=Math.round(Object.values(cs).reduce((a,b)=>a+b,0)/cats.length);
+  const level=ov>=75?'robusto':ov>=50?'moderado':ov>=25?'elevado':'critico';
+  return{overall:ov,cats:cs,level,pid};
+}
+
+function heatColor(v){
+  if(v>=70)return{bg:'rgba(0,180,100,.18)',color:'#00C878'};
+  if(v>=50)return{bg:'rgba(0,212,255,.12)',color:'#00D4FF'};
+  if(v>=35)return{bg:'rgba(255,160,30,.14)',color:'#FFA01E'};
+  return{bg:'rgba(255,80,80,.16)',color:'#FF5050'};
+}
+function catColor(v){return v>=70?'#00C878':v>=50?'#00D4FF':v>=35?'#FFA01E':'#FF5050';}
+
+function radarPoint(cx,cy,r,angle,pct){
+  const rad=(angle-90)*Math.PI/180,d=r*pct/100;
+  return[cx+d*Math.cos(rad),cy+d*Math.sin(rad)];
+}
+function hexPoints(cx,cy,r,pcts){
+  const angles=[0,60,120,180,240,300];
+  return angles.map((a,i)=>radarPoint(cx,cy,r,a,pcts[i]));
+}
+function ptStr(pts){return pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ');}
+
+function buildDashboard(sc){
+  const lv=LEVELS[sc.level];
+  const cta=CTAS[sc.level];
+  const prof=PROFILES.find(p=>p.id===sc.pid);
+  const bench=BENCHMARK[sc.pid];
+  const cats=Object.keys(CAT);
+  const catVals=cats.map(c=>sc.cats[c]);
+  const benchVals=cats.map(c=>bench[c]);
+
+  // RADAR
+  const CX=150,CY=130,R=90;
+  const angles=[0,60,120,180,240,300];
+  const labelPos=angles.map((a,i)=>{
+    const rad=(a-90)*Math.PI/180;
+    const d=R+22;
+    return[CX+d*Math.cos(rad),CY+d*Math.sin(rad)];
+  });
+  const catLabels=['Perímetro','Acceso','Fuerza','CCTV','RRHH','Emerg.'];
+  const youPts=hexPoints(CX,CY,R,catVals);
+  const bmPts=hexPoints(CX,CY,R,benchVals);
+  const gridPcts=[20,40,60,80,100];
+  const gridLines=gridPcts.map(p=>{
+    const pts=angles.map(a=>radarPoint(CX,CY,R,a,p));
+    return`<polygon points="${ptStr(pts)}" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/>`;
+  }).join('');
+  const axisLines=angles.map(a=>{
+    const[x,y]=radarPoint(CX,CY,R,a,100);
+    return`<line x1="${CX}" y1="${CY}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,.05)" stroke-width="1"/>`;
+  }).join('');
+
+  // THREATS: sorted worst 3
+  const sorted=[...cats].sort((a,b)=>sc.cats[a]-sc.cats[b]).slice(0,3);
+  const threatColors=['#FF5050','#FFA01E','#FFA01E'];
+  const threatBgs=['rgba(255,80,80,.15)','rgba(255,160,30,.12)','rgba(255,160,30,.1)'];
+
+  // HEAT dims
+  const dims=['Infraestructura','Procesos','Personal'];
+  const heatKeys=['infra','proc','pers'];
+
+  // ROAD
+  const roadDefs={
+    robusto:[
+      {phase:'Inmediato · 0–30 días',pcolor:'#00D4FF',title:'Auditoría y documentación de controles',desc:'Formalizar y documentar todos los controles existentes para certificación y auditorías externas.'},
+      {phase:'Corto plazo · 1–3 meses',pcolor:'#00D4FF',title:'Programa de mejora continua',desc:'Establecer métricas de seguimiento y evaluación periódica del nivel de seguridad.'},
+      {phase:'Mediano plazo · 3–6 meses',pcolor:'#00D4FF',title:'Certificación y ventaja competitiva',desc:'Convertir el nivel de seguridad en un diferenciador documentado ante clientes y socios.'},
+    ],
+    moderado:[
+      {phase:'Inmediato · 0–30 días',pcolor:'#FFA01E',title:`Atender brecha crítica: ${CAT[sorted[0]]}`,desc:THREATS_DESC[sorted[0]].proc},
+      {phase:'Corto plazo · 1–3 meses',pcolor:'#FFA01E',title:`Fortalecer: ${CAT[sorted[1]]}`,desc:THREATS_DESC[sorted[1]].pers},
+      {phase:'Mediano plazo · 3–6 meses',pcolor:'#00D4FF',title:'Estandarización de protocolos',desc:'Documentar y comunicar formalmente todos los protocolos de seguridad al personal.'},
+    ],
+    elevado:[
+      {phase:'Inmediato · 0–30 días',pcolor:'#FF5050',title:`Atender brecha crítica: ${CAT[sorted[0]]}`,desc:THREATS_DESC[sorted[0]].proc},
+      {phase:'Corto plazo · 1–3 meses',pcolor:'#FFA01E',title:`Reforzar: ${CAT[sorted[1]]}`,desc:THREATS_DESC[sorted[1]].infra},
+      {phase:'Mediano plazo · 3–6 meses',pcolor:'#FFA01E',title:`Desarrollar plan en: ${CAT[sorted[2]]}`,desc:THREATS_DESC[sorted[2]].pers},
+    ],
+    critico:[
+      {phase:'Inmediato · 0–30 días',pcolor:'#FF5050',title:`Intervención urgente: ${CAT[sorted[0]]}`,desc:THREATS_DESC[sorted[0]].infra},
+      {phase:'Corto plazo · 1–3 meses',pcolor:'#FF5050',title:`Intervención prioritaria: ${CAT[sorted[1]]}`,desc:THREATS_DESC[sorted[1]].proc},
+      {phase:'Mediano plazo · 3–6 meses',pcolor:'#FFA01E',title:`Reestructurar: ${CAT[sorted[2]]}`,desc:THREATS_DESC[sorted[2]].pers},
+    ],
+  };
+  const road=roadDefs[sc.level];
+
+  const el=document.getElementById('root');
+  el.innerHTML=`<div id="dash-screen" class="screen">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border);flex-wrap:wrap">
+    <div class="db-logo">I</div>
+    <div class="db-logoname">Integer</div>
+    <div class="db-sep"></div>
+    <div style="font-size:13px;color:var(--muted)">Diagnóstico de Seguridad</div>
+    <div style="flex:1"></div>
+    <span class="badge" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.18);color:var(--cyan)">${prof.label}</span>
+    <span class="badge" style="background:${lv.bg};border:1px solid ${lv.br};color:${lv.color}">${lv.label}</span>
+  </div>
+
+  <div class="db-grid">
+
+    <!-- GAUGE -->
+    <div class="card">
+      <div class="cardtitle">Índice General de Seguridad</div>
+      <div style="display:flex;justify-content:center;align-items:center;padding:8px 0">
+        <svg viewBox="0 0 200 140" width="100%" style="max-width:240px;display:block">
+          <!-- track -->
+          <path d="M 24 108 A 78 78 0 1 1 176 108" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="14" stroke-linecap="round"/>
+          <!-- fill arc -->
+          <path id="gauge-arc" d="M 24 108 A 78 78 0 0 1 24 108" fill="none" stroke="#FF6B2B" stroke-width="14" stroke-linecap="round"/>
+          <!-- end dots -->
+          <circle cx="24" cy="108" r="4" fill="rgba(255,255,255,.15)"/>
+          <circle cx="176" cy="108" r="4" fill="rgba(255,255,255,.15)"/>
+          <!-- labels -->
+          <text x="16" y="126" fill="#3A4D6A" font-size="9" font-family="system-ui" text-anchor="middle">0%</text>
+          <text x="184" y="126" fill="#3A4D6A" font-size="9" font-family="system-ui" text-anchor="middle">100%</text>
+          <!-- score centered -->
+          <text x="100" y="90" fill="#FF6B2B" font-size="44" font-weight="800" font-family="system-ui" text-anchor="middle" dominant-baseline="auto">${sc.overall}%</text>
+          <text x="100" y="112" fill="${lv.color}" font-size="11" font-family="system-ui" text-anchor="middle">Nivel ${lv.label}</text>
+          <text x="100" y="128" fill="#4E6080" font-size="9" font-family="system-ui" text-anchor="middle">30 preguntas evaluadas</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- RADAR -->
+    <div class="card">
+      <div class="cardtitle">Análisis por Categoría</div>
+      <div style="display:flex;justify-content:center">
+        <svg viewBox="0 0 300 260" width="100%" style="max-width:300px">
+          ${gridLines}${axisLines}
+          <polygon points="${ptStr(bmPts)}" fill="none" stroke="rgba(255,107,43,.35)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <polygon points="${ptStr(youPts)}" fill="rgba(0,212,255,.1)" stroke="var(--cyan)" stroke-width="2"/>
+          ${youPts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="var(--cyan)"/>`).join('')}
+          ${labelPos.map(([x,y],i)=>`<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" fill="#7A90B5" font-size="9" font-family="system-ui">${catLabels[i]} ${catVals[i]}%</text>`).join('')}
+        </svg>
+      </div>
+      <div style="display:flex;gap:14px;justify-content:center;margin-top:6px">
+        <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--dim)"><div style="width:14px;height:2px;background:var(--cyan);border-radius:1px"></div>Tu resultado</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--dim)"><div style="width:14px;height:1px;border-top:1px dashed rgba(255,107,43,.5)"></div>Benchmark</div>
+      </div>
+    </div>
+
+    <!-- TOP AMENAZAS -->
+    <div class="card">
+      <div class="cardtitle">Top 3 Áreas Prioritarias</div>
+      ${sorted.map((cat,i)=>`
+      <div class="threat-item">
+        <div class="threat-top">
+          <div class="threat-rank" style="background:${threatBgs[i]};color:${threatColors[i]}">${i+1}</div>
+          <div class="threat-name">${CAT[cat]}</div>
+          <div class="threat-score" style="color:${threatColors[i]}">${sc.cats[cat]}%</div>
+        </div>
+        <div class="threat-desc">${THREATS_DESC[cat].proc} ${THREATS_DESC[cat].pers}</div>
+      </div>`).join('')}
+    </div>
+
+    <!-- MAPA CALOR -->
+    <div class="card">
+      <div class="cardtitle">Mapa de Vulnerabilidad</div>
+      <div class="heat-hdr">
+        <div></div>
+        ${dims.map(d=>`<div class="heat-hdr-lbl">${d}</div>`).join('')}
+      </div>
+      ${cats.map(c=>{
+        const base=sc.cats[c];
+        const vals=[
+          Math.min(100,Math.round(base*1.08)),
+          base,
+          Math.max(0,Math.round(base*0.92)),
+        ];
+        return`<div class="heat-row">
+          <div class="heat-cat">${CAT[c]}</div>
+          ${vals.map(v=>{const hc=heatColor(v);return`<div class="heat-cell" style="background:${hc.bg};color:${hc.color}">${v}%</div>`}).join('')}
+        </div>`;
+      }).join('')}
+    </div>
+
+    <!-- BENCHMARK -->
+    <div class="card db-full">
+      <div class="cardtitle">Comparativo de Industria</div>
+      <div class="bmark-legend">
+        <div class="bmark-legend-item"><div class="bmark-dot" style="background:var(--cyan)"></div>Tu resultado</div>
+        <div class="bmark-legend-item"><div class="bmark-dot" style="background:rgba(255,107,43,.6)"></div>Promedio ${prof.label}</div>
+        <div class="bmark-legend-item"><div style="width:8px;height:2px;background:#3A5A8A;border-radius:1px;margin-top:3px"></div>Estándar internacional</div>
+      </div>
+      ${cats.map(c=>{
+        const you=sc.cats[c],ind=bench[c],intl=INTL[c];
+        return`<div class="bmark-row">
+          <div class="bmark-lbl">${CAT[c]}</div>
+          <div class="bmark-track" style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;position:relative;flex:1">
+            <div style="height:100%;border-radius:3px;background:var(--cyan);width:${you}%;transition:width 1s ease"></div>
+            <div style="position:absolute;top:-4px;left:${ind}%;width:2px;height:14px;background:#FF6B2B;border-radius:1px;opacity:.6"></div>
+            <div style="position:absolute;top:-2px;left:${intl}%;width:2px;height:10px;background:#3A5A8A;border-radius:1px"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;min-width:100px">
+            <span style="font-size:11px;font-weight:700;color:var(--cyan);min-width:28px;text-align:right">${you}%</span>
+            <span style="font-size:10px;color:var(--dim)">vs ${ind}% / ${intl}%</span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <!-- HOJA DE RUTA -->
+    <div class="card db-full">
+      <div class="cardtitle">Hoja de Ruta Sugerida</div>
+      <div class="road-steps">
+        ${road.map(r=>`
+        <div class="road-step">
+          <div class="road-phase" style="color:${r.pcolor}">${r.phase}</div>
+          <div class="road-title">${r.title}</div>
+          <div class="road-desc">${r.desc}</div>
+        </div>`).join('')}
+      </div>
+      <div class="road-cta">
+        <div class="road-cta-text">
+          <div class="road-cta-title">${cta.t}</div>
+          <div class="road-cta-sub">${cta.d}</div>
+        </div>
+        <a href="https://integer.mx" target="_blank" style="text-decoration:none">
+          <button class="btn">Solicitar diagnóstico completo</button>
+        </a>
+      </div>
+    </div>
+
+  </div>
+  <div class="restart-row">
+    <button class="btn-ghost" onclick="goScreen('intro')">Reiniciar diagnóstico</button>
+  </div>
+</div>`;
+
+  // Animate gauge
+  setTimeout(()=>{
+    const score=sc.overall/100;
+    const r=78,cx=100,cy=108;
+    const total=Math.PI*1.5,start=Math.PI*0.75;
+    const endA=start+score*total;
+    const x1=cx+r*Math.cos(start),y1=cy+r*Math.sin(start);
+    const x2=cx+r*Math.cos(endA),y2=cy+r*Math.sin(endA);
+    const large=score*total>Math.PI?1:0;
+    const arc=document.getElementById('gauge-arc');
+    if(arc)arc.setAttribute('d',`M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`);
+  },100);
+}
+
+function goScreen(name){
+  STATE.screen=name;
+  if(name==='intro') STATE={screen:'intro',profile:null,questions:[],qi:0,answers:{}};
+  render();
+}
+
+function selProfile(id){
+  STATE.profile=PROFILES.find(p=>p.id===id);
+  STATE.questions=[...COMMON,...PQ[id]];
+  STATE.qi=0;STATE.answers={};STATE.screen='quiz';
+  render();
+}
+
+function answerQ(score){
+  const q=STATE.questions[STATE.qi];
+  STATE.answers[q.id]=score;
+  if(STATE.qi<STATE.questions.length-1){STATE.qi++;render();}
+  else{
+    const sc=calcScores(STATE.profile.id,STATE.answers,STATE.questions);
+    buildDashboard(sc);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+function goBack(){
+  if(STATE.qi===0){STATE.screen='profile';}
+  else{STATE.qi--;}
+  render();
+}
+
+function render(){
+  const{screen,profile,questions,qi}=STATE;
+  const root=document.getElementById('root');
+  if(screen==='intro'){
+    root.innerHTML=`<div id="intro-screen" class="screen">
+      <div class="logo"><div class="logo-box">I</div><div class="logo-name">Integer</div></div>
+      <div class="eyebrow">Diagnóstico de Seguridad</div>
+      <div class="h1">Conoce el nivel de<br>vulnerabilidad de tu <b>operación</b></div>
+      <div class="sub">Responde 30 preguntas diseñadas para tu sector y obtén un análisis detallado del estado actual de tu postura de seguridad — sin costo y en minutos.</div>
+      <button class="btn" onclick="goScreen('profile')">Iniciar diagnóstico &rarr;</button>
+      <div class="meta-row"><span>~5 minutos</span><div class="meta-dot"></div><span>30 preguntas</span><div class="meta-dot"></div><span>Resultados inmediatos</span></div>
+    </div>`;
+  } else if(screen==='profile'){
+    root.innerHTML=`<div id="profile-screen" class="screen">
+      <div class="logo"><div class="logo-box">I</div><div class="logo-name">Integer</div></div>
+      <div class="slabel">¿Cuál describe mejor tu organización?</div>
+      <div class="pcol">
+        ${PROFILES.map(p=>`
+        <div class="pcard" onclick="selProfile('${p.id}')">
+          <div class="picon">${ICONS[p.id]}</div>
+          <div class="pinfo"><div class="plabel">${p.label}</div><div class="pdesc">${p.desc}</div></div>
+          <div class="parrow">›</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  } else if(screen==='quiz'){
+    const q=questions[qi];
+    const pct=Math.round(qi/questions.length*100);
+    root.innerHTML=`<div id="quiz-screen" class="screen">
+      <div class="quiz-logo"><div class="logo-box">I</div><div class="logo-name" style="font-size:17px;font-weight:700">Integer</div></div>
+      <div class="prog-wrap"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="qmeta">
+        <span class="cat-badge">${CAT[q.cat]}</span>
+        <span class="qctr">${qi+1} / ${questions.length}</span>
+      </div>
+      <div class="qtext">${q.q}</div>
+      <div class="opts">
+        ${q.opts.map(o=>`<button class="opt" onclick="answerQ(${o.s})">${o.t}</button>`).join('')}
+      </div>
+      <div class="qnav">
+        <button class="btn-ghost" onclick="goBack()">${qi===0?'← Cambiar perfil':'← Anterior'}</button>
+      </div>
+    </div>`;
+  }
+}
+
+render();
+</script>
+</body>
+</html>
