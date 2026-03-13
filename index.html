@@ -139,6 +139,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .form-input{width:100%;background:#131A2E;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--text);font-family:var(--font);outline:none;transition:border-color .18s}
 .form-input::placeholder{color:#2E3F5C}
 .form-input:focus{border-color:rgba(255,107,43,.55);box-shadow:0 0 0 3px rgba(255,107,43,.08)}
+
+/* ── QUIZ SHELL ── */
+.quiz-shell{
+  background:#0D1525;
+  border:1px solid rgba(99,143,210,.18);
+  border-radius:20px;
+  padding:36px 32px 32px;
+  box-shadow:0 0 0 1px rgba(0,180,255,.04), 0 8px 40px rgba(0,0,0,.35);
+  margin:0 auto;
+}
+@media(max-width:600px){.quiz-shell{padding:24px 18px 22px;border-radius:14px}}
 </style>
 </head>
 <body>
@@ -621,37 +632,42 @@ function render(){
     </div>`;
   } else if(screen==='profile'){
     root.innerHTML=`<div id="profile-screen" class="screen">
-      <div class="logo"><div class="logo-box">I</div><div class="logo-name">Integer</div></div>
-      <div class="slabel">¿Cuál describe mejor tu organización?</div>
-      <div class="pcol">
-        ${PROFILES.map(p=>`
-        <div class="pcard" onclick="selProfile('${p.id}')">
-          <div class="picon">${ICONS[p.id]}</div>
-          <div class="pinfo"><div class="plabel">${p.label}</div><div class="pdesc">${p.desc}</div></div>
-          <div class="parrow">›</div>
-        </div>`).join('')}
+      <div class="quiz-shell" style="max-width:560px">
+        <div class="logo"><div class="logo-box">I</div><div class="logo-name">Integer</div></div>
+        <div class="slabel">¿Cuál describe mejor tu organización?</div>
+        <div class="pcol">
+          ${PROFILES.map(p=>`
+          <div class="pcard" onclick="selProfile('${p.id}')">
+            <div class="picon">${ICONS[p.id]}</div>
+            <div class="pinfo"><div class="plabel">${p.label}</div><div class="pdesc">${p.desc}</div></div>
+            <div class="parrow">›</div>
+          </div>`).join('')}
+        </div>
       </div>
     </div>`;
   } else if(screen==='quiz'){
     const q=questions[qi];
     const pct=Math.round(qi/questions.length*100);
     root.innerHTML=`<div id="quiz-screen" class="screen">
-      <div class="quiz-logo"><div class="logo-box">I</div><div class="logo-name" style="font-size:17px;font-weight:700">Integer</div></div>
-      <div class="prog-wrap"><div class="prog-fill" style="width:${pct}%"></div></div>
-      <div class="qmeta">
-        <span class="cat-badge">${CAT[q.cat]}</span>
-        <span class="qctr">${qi+1} / ${questions.length}</span>
-      </div>
-      <div class="qtext">${q.q}</div>
-      <div class="opts">
-        ${q.opts.map(o=>`<button class="opt" onclick="answerQ(${o.s})">${o.t}</button>`).join('')}
-      </div>
-      <div class="qnav">
-        <button class="btn-ghost" onclick="goBack()">${qi===0?'← Cambiar perfil':'← Anterior'}</button>
+      <div class="quiz-shell" style="max-width:640px">
+        <div class="quiz-logo"><div class="logo-box">I</div><div class="logo-name" style="font-size:17px;font-weight:700">Integer</div></div>
+        <div class="prog-wrap"><div class="prog-fill" style="width:${pct}%"></div></div>
+        <div class="qmeta">
+          <span class="cat-badge">${CAT[q.cat]}</span>
+          <span class="qctr">${qi+1} / ${questions.length}</span>
+        </div>
+        <div class="qtext">${q.q}</div>
+        <div class="opts">
+          ${q.opts.map(o=>`<button class="opt" onclick="answerQ(${o.s})">${o.t}</button>`).join('')}
+        </div>
+        <div class="qnav">
+          <button class="btn-ghost" onclick="goBack()">${qi===0?'← Cambiar perfil':'← Anterior'}</button>
+        </div>
       </div>
     </div>`;
   } else if(screen==='form'){
     root.innerHTML=`<div id="form-screen" class="screen">
+      <div class="quiz-shell" style="max-width:500px">
       <div class="logo"><div class="logo-box">I</div><div class="logo-name">Integer</div></div>
       <div class="eyebrow">Tu diagnóstico está listo</div>
       <div class="form-title">Un último paso para ver tus resultados</div>
@@ -700,6 +716,7 @@ function render(){
       <button class="btn btn-full" onclick="submitForm()">Ver mi diagnóstico &rarr;</button>
       <div style="text-align:center;margin-top:12px">
         <button class="btn-ghost" onclick="goBack()">← Regresar</button>
+      </div>
       </div>
     </div>`;
   }
