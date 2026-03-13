@@ -48,7 +48,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .h1{font-size:36px;font-weight:700;letter-spacing:-.8px;line-height:1.15;margin-bottom:14px}
 .h1 b{color:var(--orange)}
 .sub{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:36px;max-width:440px}
-.meta-row{display:flex;align-items:center;gap:14px;margin-top:14px;font-size:12px;color:var(--dim)}
+.meta-row{display:flex;align-items:center;gap:14px;margin-top:32px;font-size:12px;color:var(--dim)}
 .meta-dot{width:3px;height:3px;border-radius:50%;background:#2A3550}
 
 /* ── PROFILE ── */
@@ -130,6 +130,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .road-cta-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
 .road-cta-sub{font-size:11px;color:var(--muted);line-height:1.55}
 .restart-row{text-align:center;margin-top:18px}
+#form-screen{max-width:500px;margin:0 auto;padding-top:20px}
+.form-title{font-size:22px;font-weight:700;letter-spacing:-.4px;margin-bottom:8px}
+.form-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:28px}
+.form-group{margin-bottom:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.form-label{display:block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.form-input{width:100%;background:#131A2E;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--text);font-family:var(--font);outline:none;transition:border-color .18s}
+.form-input::placeholder{color:#2E3F5C}
+.form-input:focus{border-color:rgba(255,107,43,.55);box-shadow:0 0 0 3px rgba(255,107,43,.08)}
 </style>
 </head>
 <body>
@@ -404,22 +413,24 @@ function buildDashboard(sc){
     <!-- GAUGE -->
     <div class="card">
       <div class="cardtitle">Índice General de Seguridad</div>
-      <div style="display:flex;justify-content:center;align-items:center;padding:8px 0">
-        <svg viewBox="0 0 200 140" width="100%" style="max-width:240px;display:block">
-          <!-- track -->
-          <path d="M 24 108 A 78 78 0 1 1 176 108" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="14" stroke-linecap="round"/>
+      <div style="display:flex;justify-content:center;align-items:center">
+        <svg viewBox="0 0 200 130" width="100%" style="max-width:260px;display:block;overflow:visible">
+          <!-- track: upper semicircle, left to right, clockwise -->
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14" stroke-linecap="round"/>
           <!-- fill arc -->
-          <path id="gauge-arc" d="M 24 108 A 78 78 0 0 1 24 108" fill="none" stroke="#FF6B2B" stroke-width="14" stroke-linecap="round"/>
-          <!-- end dots -->
-          <circle cx="24" cy="108" r="4" fill="rgba(255,255,255,.15)"/>
-          <circle cx="176" cy="108" r="4" fill="rgba(255,255,255,.15)"/>
+          <path id="gauge-arc" d="M 20 100 A 80 80 0 0 1 20 100" fill="none" stroke="#FF6B2B" stroke-width="14" stroke-linecap="round"/>
+          <!-- endpoint dots -->
+          <circle cx="20" cy="100" r="4" fill="rgba(255,255,255,.18)"/>
+          <circle cx="180" cy="100" r="4" fill="rgba(255,255,255,.18)"/>
           <!-- labels -->
-          <text x="16" y="126" fill="#3A4D6A" font-size="9" font-family="system-ui" text-anchor="middle">0%</text>
-          <text x="184" y="126" fill="#3A4D6A" font-size="9" font-family="system-ui" text-anchor="middle">100%</text>
-          <!-- score centered -->
-          <text x="100" y="90" fill="#FF6B2B" font-size="44" font-weight="800" font-family="system-ui" text-anchor="middle" dominant-baseline="auto">${sc.overall}%</text>
-          <text x="100" y="112" fill="${lv.color}" font-size="11" font-family="system-ui" text-anchor="middle">Nivel ${lv.label}</text>
-          <text x="100" y="128" fill="#4E6080" font-size="9" font-family="system-ui" text-anchor="middle">30 preguntas evaluadas</text>
+          <text x="20" y="120" fill="#3A4D6A" font-size="9" font-family="system-ui" text-anchor="middle">0%</text>
+          <text x="180" y="120" fill="#3A4D6A" font-size="9" font-family="system-ui" text-anchor="middle">100%</text>
+          <!-- score number -->
+          <text id="gauge-num" x="100" y="82" fill="#FF6B2B" font-size="46" font-weight="800" font-family="system-ui" text-anchor="middle">${sc.overall}%</text>
+          <!-- level label -->
+          <text x="100" y="100" fill="${lv.color}" font-size="11" font-weight="600" font-family="system-ui" text-anchor="middle">Nivel ${lv.label}</text>
+          <!-- subtitle -->
+          <text x="100" y="115" fill="#4E6080" font-size="9" font-family="system-ui" text-anchor="middle">30 preguntas evaluadas</text>
         </svg>
       </div>
     </div>
@@ -530,18 +541,18 @@ function buildDashboard(sc){
   </div>
 </div>`;
 
-  // Animate gauge
+  // Animate gauge — semicircle: left (π) → clockwise over top → right (2π)
   setTimeout(()=>{
     const score=sc.overall/100;
-    const r=78,cx=100,cy=108;
-    const total=Math.PI*1.5,start=Math.PI*0.75;
-    const endA=start+score*total;
-    const x1=cx+r*Math.cos(start),y1=cy+r*Math.sin(start);
-    const x2=cx+r*Math.cos(endA),y2=cy+r*Math.sin(endA);
-    const large=score*total>Math.PI?1:0;
+    const r=80,cx=100,cy=100;
+    const startA=Math.PI; // left endpoint
+    const endA=startA+score*Math.PI; // progress along the 180° arc
+    const x1=cx+r*Math.cos(startA), y1=cy+r*Math.sin(startA); // (20,100)
+    const x2=cx+r*Math.cos(endA),   y2=cy+r*Math.sin(endA);
+    const large=0; // never exceeds 180°
     const arc=document.getElementById('gauge-arc');
     if(arc)arc.setAttribute('d',`M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`);
-  },100);
+  },120);
 }
 
 function goScreen(name){
@@ -561,17 +572,30 @@ function answerQ(score){
   const q=STATE.questions[STATE.qi];
   STATE.answers[q.id]=score;
   if(STATE.qi<STATE.questions.length-1){STATE.qi++;render();}
-  else{
-    const sc=calcScores(STATE.profile.id,STATE.answers,STATE.questions);
-    buildDashboard(sc);
-    window.scrollTo({top:0,behavior:'smooth'});
+  else{STATE.screen='form';render();}
+}
+
+function submitForm(){
+  const nombre=document.getElementById('f-nombre').value.trim();
+  const apellidos=document.getElementById('f-apellidos').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const tel=document.getElementById('f-tel').value.trim();
+  const empresa=document.getElementById('f-empresa').value.trim();
+  if(!nombre||!apellidos||!email||!empresa){
+    const err=document.getElementById('form-err');
+    err.style.display='block';
+    return;
   }
+  STATE.lead={nombre,apellidos,email,tel,empresa};
+  const sc=calcScores(STATE.profile.id,STATE.answers,STATE.questions);
+  buildDashboard(sc);
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function goBack(){
-  if(STATE.qi===0){STATE.screen='profile';}
-  else{STATE.qi--;}
-  render();
+  if(STATE.screen==='form'){STATE.screen='quiz';STATE.qi=STATE.questions.length-1;render();}
+  else if(STATE.qi===0){STATE.screen='profile';render();}
+  else{STATE.qi--;render();}
 }
 
 function render(){
@@ -617,10 +641,43 @@ function render(){
         <button class="btn-ghost" onclick="goBack()">${qi===0?'← Cambiar perfil':'← Anterior'}</button>
       </div>
     </div>`;
+  } else if(screen==='form'){
+    root.innerHTML=`<div id="form-screen" class="screen">
+      <div class="logo"><div class="logo-box">I</div><div class="logo-name">Integer</div></div>
+      <div class="eyebrow">Tu diagnóstico está listo</div>
+      <div class="form-title">Un último paso para ver tus resultados</div>
+      <div class="form-sub">Ingresa tus datos para acceder a tu diagnóstico personalizado. Tu información es confidencial.</div>
+      <div class="form-row">
+        <div>
+          <label class="form-label" for="f-nombre">Nombre</label>
+          <input class="form-input" id="f-nombre" type="text" placeholder="Juan">
+        </div>
+        <div>
+          <label class="form-label" for="f-apellidos">Apellidos</label>
+          <input class="form-input" id="f-apellidos" type="text" placeholder="García López">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="f-email">Correo electrónico</label>
+        <input class="form-input" id="f-email" type="email" placeholder="juan@empresa.com">
+      </div>
+      <div class="form-row">
+        <div>
+          <label class="form-label" for="f-tel">Teléfono</label>
+          <input class="form-input" id="f-tel" type="tel" placeholder="+52 81 0000 0000">
+        </div>
+        <div>
+          <label class="form-label" for="f-empresa">Empresa</label>
+          <input class="form-input" id="f-empresa" type="text" placeholder="Nombre de tu empresa">
+        </div>
+      </div>
+      <div id="form-err" style="display:none;color:#FF6B2B;font-size:12px;margin-bottom:12px">Por favor completa los campos requeridos: nombre, apellidos, correo y empresa.</div>
+      <button class="btn btn-full" onclick="submitForm()">Ver mi diagnóstico &rarr;</button>
+      <div style="text-align:center;margin-top:12px">
+        <button class="btn-ghost" onclick="goBack()">← Regresar</button>
+      </div>
+    </div>`;
   }
-}
-
-render();
 </script>
 </body>
 </html>
