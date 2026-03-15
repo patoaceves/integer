@@ -596,12 +596,11 @@ function submitForm(){
 
   const emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const telOk=/^\d{10}$/.test(tel);
-  const ladaOk=/^\d{1,3}$/.test(lada);
 
   document.getElementById('err-email').style.display=(!email||!emailOk)?'block':'none';
-  document.getElementById('err-tel').style.display=(!tel||!telOk||!ladaOk)?'block':'none';
+  document.getElementById('err-tel').style.display=(!tel||!telOk)?'block':'none';
 
-  if(!nombre||!apellidos||!email||!emailOk||!tel||!telOk||!lada||!ladaOk||!empresa){
+  if(!nombre||!apellidos||!email||!emailOk||!tel||!telOk||!empresa){
     document.getElementById('form-err').style.display='block';
     return;
   }
