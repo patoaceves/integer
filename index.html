@@ -177,108 +177,108 @@ const PROFILES=[
 const CAT={perimetro:'Perímetro',acceso:'Control de Acceso',fuerza:'Fuerza de Seguridad',cctv:'CCTV / Alarmas',rrhh:'Recursos Humanos',emergencias:'Emergencias'};
 
 const COMMON=[
-  {id:'c1',cat:'perimetro',q:'¿Las instalaciones cuentan con delimitación física claramente definida?',opts:[O('Sí, barda sólida',1),O('Sí, cerca o reja',.67),O('Parcialmente',.33),O('No',0)]},
-  {id:'c2',cat:'perimetro',q:'¿Existe iluminación exterior perimetral durante la noche?',opts:[O('Sí, todo el perímetro',1),O('Sí, áreas principales',.6),O('Parcialmente',.3),O('No',0)]},
-  {id:'c3',cat:'acceso',q:'¿Se controla el acceso de visitantes y proveedores con registro formal?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-  {id:'c4',cat:'acceso',q:'¿El personal utiliza credenciales o identificación para ingresar?',opts:[O('Sí, tarjeta o biométrico',1),O('Sí, gafete visual',.5),O('No',0)]},
-  {id:'c5',cat:'acceso',q:'¿Existe un punto de acceso único y controlado para vehículos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-  {id:'c6',cat:'fuerza',q:'¿Cuenta con personal de seguridad privada asignado?',opts:[O('Sí, 24/7',1),O('Sí, horario parcial',.5),O('No',0)]},
-  {id:'c7',cat:'fuerza',q:'¿El personal de seguridad cuenta con capacitación documentada?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-  {id:'c8',cat:'cctv',q:'¿La instalación cuenta con sistema de videovigilancia (CCTV)?',opts:[O('Sí, monitoreo en tiempo real',1),O('Sí, solo grabación',.5),O('No',0)]},
-  {id:'c9',cat:'cctv',q:'¿Las cámaras cubren accesos y áreas críticas?',opts:[O('Sí, todos',1),O('Parcialmente',.5),O('No',0)]},
-  {id:'c10',cat:'cctv',q:'¿Cuenta con sistema de alarma contra intrusión?',opts:[O('Sí, con monitoreo externo',1),O('Sí, solo local',.6),O('No',0)]},
-  {id:'c11',cat:'rrhh',q:'¿Se realizan estudios de confiabilidad o antecedentes al personal nuevo?',opts:[O('Sí, siempre',1),O('En algunos casos',.5),O('No',0)]},
-  {id:'c12',cat:'rrhh',q:'¿Existe un protocolo de baja segura para empleados que dejan la empresa?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-  {id:'c13',cat:'emergencias',q:'¿La empresa cuenta con un plan de emergencias documentado?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
-  {id:'c14',cat:'emergencias',q:'¿Se realizan simulacros de seguridad con el personal?',opts:[O('Sí, periódicamente',1),O('Sí, alguna vez',.5),O('No',0)]},
-  {id:'c15',cat:'emergencias',q:'¿Existe comunicación formal con autoridades de seguridad locales?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+  {id:'c1',cat:'perimetro',dim:'i',q:'¿Las instalaciones cuentan con delimitación física claramente definida?',opts:[O('Sí, barda sólida',1),O('Sí, cerca o reja',.67),O('Parcialmente',.33),O('No',0)]},
+  {id:'c2',cat:'perimetro',dim:'i',q:'¿Existe iluminación exterior perimetral durante la noche?',opts:[O('Sí, todo el perímetro',1),O('Sí, áreas principales',.6),O('Parcialmente',.3),O('No',0)]},
+  {id:'c3',cat:'acceso',dim:'p',q:'¿Se controla el acceso de visitantes y proveedores con registro formal?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c4',cat:'acceso',dim:'i',q:'¿El personal utiliza credenciales o identificación para ingresar?',opts:[O('Sí, tarjeta o biométrico',1),O('Sí, gafete visual',.5),O('No',0)]},
+  {id:'c5',cat:'acceso',dim:'i',q:'¿Existe un punto de acceso único y controlado para vehículos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c6',cat:'fuerza',dim:'h',q:'¿Cuenta con personal de seguridad privada asignado?',opts:[O('Sí, 24/7',1),O('Sí, horario parcial',.5),O('No',0)]},
+  {id:'c7',cat:'fuerza',dim:'h',q:'¿El personal de seguridad cuenta con capacitación documentada?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c8',cat:'cctv',dim:'i',q:'¿La instalación cuenta con sistema de videovigilancia (CCTV)?',opts:[O('Sí, monitoreo en tiempo real',1),O('Sí, solo grabación',.5),O('No',0)]},
+  {id:'c9',cat:'cctv',dim:'i',q:'¿Las cámaras cubren accesos y áreas críticas?',opts:[O('Sí, todos',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c10',cat:'cctv',dim:'i',q:'¿Cuenta con sistema de alarma contra intrusión?',opts:[O('Sí, con monitoreo externo',1),O('Sí, solo local',.6),O('No',0)]},
+  {id:'c11',cat:'rrhh',dim:'p',q:'¿Se realizan estudios de confiabilidad o antecedentes al personal nuevo?',opts:[O('Sí, siempre',1),O('En algunos casos',.5),O('No',0)]},
+  {id:'c12',cat:'rrhh',dim:'p',q:'¿Existe un protocolo de baja segura para empleados que dejan la empresa?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+  {id:'c13',cat:'emergencias',dim:'p',q:'¿La empresa cuenta con un plan de emergencias documentado?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
+  {id:'c14',cat:'emergencias',dim:'h',q:'¿Se realizan simulacros de seguridad con el personal?',opts:[O('Sí, periódicamente',1),O('Sí, alguna vez',.5),O('No',0)]},
+  {id:'c15',cat:'emergencias',dim:'p',q:'¿Existe comunicación formal con autoridades de seguridad locales?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
 ];
 
 const PQ={
   manufactura:[
-    {id:'m1',cat:'acceso',q:'¿Existen zonas de producción con acceso restringido diferenciado?',opts:[O('Sí, control estricto',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'m2',cat:'acceso',q:'¿Se controla el ingreso y egreso de materiales y materias primas?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'m3',cat:'acceso',q:'¿Se realizan inventarios físicos periódicos para detectar mermas?',opts:[O('Sí, frecuentemente',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'m4',cat:'acceso',q:'¿Los proveedores y contratistas tienen acceso supervisado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'m5',cat:'emergencias',q:'¿Existen protocolos para manejo de materiales peligrosos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No aplica',.8),O('No',0)]},
-    {id:'m6',cat:'fuerza',q:'¿Las áreas de carga y descarga tienen supervisión de seguridad?',opts:[O('Sí, siempre',1),O('A veces',.5),O('No',0)]},
-    {id:'m7',cat:'perimetro',q:'¿Se cuenta con iluminación adecuada en patios y bodegas?',opts:[O('Sí, todas las áreas',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'m8',cat:'emergencias',q:'¿Se documentan los incidentes de seguridad ocurridos en planta?',opts:[O('Sí, todos',1),O('Algunos',.5),O('No',0)]},
-    {id:'m9',cat:'acceso',q:'¿Existe control de herramientas y equipos de alto valor?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'m10',cat:'acceso',q:'¿El personal de distintas áreas tiene acceso delimitado por zona?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'m11',cat:'fuerza',q:'¿Se realizan revisiones de salida al personal operativo?',opts:[O('Sí, siempre',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'m12',cat:'emergencias',q:'¿Existe protocolo de respuesta ante robo o siniestro en planta?',opts:[O('Sí, documentado',1),O('En proceso',.5),O('No',0)]},
-    {id:'m13',cat:'emergencias',q:'¿Los activos cuentan con seguro contra robo o siniestro?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'m14',cat:'fuerza',q:'¿Los accesos en turnos nocturnos tienen refuerzo de seguridad?',opts:[O('Sí',1),O('Igual que diurno',.5),O('No',0)]},
-    {id:'m15',cat:'perimetro',q:'¿Se realizan recorridos perimetrales con bitácora de forma regular?',opts:[O('Sí, con registro',1),O('Sí, sin registro',.5),O('No',0)]},
+    {id:'m1',cat:'acceso',dim:'i',q:'¿Existen zonas de producción con acceso restringido diferenciado?',opts:[O('Sí, control estricto',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m2',cat:'acceso',dim:'p',q:'¿Se controla el ingreso y egreso de materiales y materias primas?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m3',cat:'acceso',dim:'p',q:'¿Se realizan inventarios físicos periódicos para detectar mermas?',opts:[O('Sí, frecuentemente',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'m4',cat:'acceso',dim:'p',q:'¿Los proveedores y contratistas tienen acceso supervisado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m5',cat:'emergencias',dim:'p',q:'¿Existen protocolos para manejo de materiales peligrosos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No aplica',.8),O('No',0)]},
+    {id:'m6',cat:'fuerza',dim:'h',q:'¿Las áreas de carga y descarga tienen supervisión de seguridad?',opts:[O('Sí, siempre',1),O('A veces',.5),O('No',0)]},
+    {id:'m7',cat:'perimetro',dim:'i',q:'¿Se cuenta con iluminación adecuada en patios y bodegas?',opts:[O('Sí, todas las áreas',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m8',cat:'emergencias',dim:'p',q:'¿Se documentan los incidentes de seguridad ocurridos en planta?',opts:[O('Sí, todos',1),O('Algunos',.5),O('No',0)]},
+    {id:'m9',cat:'acceso',dim:'p',q:'¿Existe control de herramientas y equipos de alto valor?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m10',cat:'acceso',dim:'i',q:'¿El personal de distintas áreas tiene acceso delimitado por zona?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m11',cat:'fuerza',dim:'p',q:'¿Se realizan revisiones de salida al personal operativo?',opts:[O('Sí, siempre',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'m12',cat:'emergencias',dim:'p',q:'¿Existe protocolo de respuesta ante robo o siniestro en planta?',opts:[O('Sí, documentado',1),O('En proceso',.5),O('No',0)]},
+    {id:'m13',cat:'emergencias',dim:'p',q:'¿Los activos cuentan con seguro contra robo o siniestro?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'m14',cat:'fuerza',dim:'h',q:'¿Los accesos en turnos nocturnos tienen refuerzo de seguridad?',opts:[O('Sí',1),O('Igual que diurno',.5),O('No',0)]},
+    {id:'m15',cat:'perimetro',dim:'p',q:'¿Se realizan recorridos perimetrales con bitácora de forma regular?',opts:[O('Sí, con registro',1),O('Sí, sin registro',.5),O('No',0)]},
   ],
   corporativo:[
-    {id:'co1',cat:'rrhh',q:'¿Existen políticas documentadas de seguridad de la información?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
-    {id:'co2',cat:'acceso',q:'¿El acceso a servidores o cuartos de datos está físicamente restringido?',opts:[O('Sí',1),O('Parcialmente',.5),O('No aplica',.8),O('No',0)]},
-    {id:'co3',cat:'acceso',q:'¿Se controla el uso de dispositivos externos en equipos corporativos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'co4',cat:'acceso',q:'¿Los visitantes son acompañados en todo momento dentro de las instalaciones?',opts:[O('Sí',1),O('Solo en áreas sensibles',.6),O('No',0)]},
-    {id:'co5',cat:'acceso',q:'¿El edificio cuenta con lobby o recepción con filtro de acceso?',opts:[O('Sí, con control formal',1),O('Sí, sin control',.4),O('No',0)]},
-    {id:'co6',cat:'fuerza',q:'¿Se tiene protocolo ante visitas de alto perfil o situaciones de amenaza?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
-    {id:'co7',cat:'perimetro',q:'¿El estacionamiento y accesos vehiculares tienen seguridad?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'co8',cat:'acceso',q:'¿Las áreas directivas tienen control de acceso diferenciado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'co9',cat:'acceso',q:'¿Se realizan auditorías de acceso (quién entró, cuándo, a qué área)?',opts:[O('Sí, regularmente',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'co10',cat:'emergencias',q:'¿El personal tiene protocolo ante amenaza interna (robo, extorsión)?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'co11',cat:'emergencias',q:'¿Existe un directorio de contactos de emergencia actualizado?',opts:[O('Sí',1),O('Desactualizado',.4),O('No',0)]},
-    {id:'co12',cat:'rrhh',q:'¿Se realizan evaluaciones de riesgo para personal directivo?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'co13',cat:'rrhh',q:'¿Las políticas de seguridad son comunicadas formalmente a todo el personal?',opts:[O('Sí, periódicamente',1),O('Solo al ingreso',.5),O('No',0)]},
-    {id:'co14',cat:'rrhh',q:'¿Se cuenta con protocolo ante pérdida de dispositivos corporativos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'co15',cat:'emergencias',q:'¿El edificio tiene plan de evacuación actualizado y señalizado?',opts:[O('Sí',1),O('Desactualizado',.4),O('No',0)]},
+    {id:'co1',cat:'rrhh',dim:'p',q:'¿Existen políticas documentadas de seguridad de la información?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
+    {id:'co2',cat:'acceso',dim:'i',q:'¿El acceso a servidores o cuartos de datos está físicamente restringido?',opts:[O('Sí',1),O('Parcialmente',.5),O('No aplica',.8),O('No',0)]},
+    {id:'co3',cat:'acceso',dim:'p',q:'¿Se controla el uso de dispositivos externos en equipos corporativos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co4',cat:'acceso',dim:'h',q:'¿Los visitantes son acompañados en todo momento dentro de las instalaciones?',opts:[O('Sí',1),O('Solo en áreas sensibles',.6),O('No',0)]},
+    {id:'co5',cat:'acceso',dim:'i',q:'¿El edificio cuenta con lobby o recepción con filtro de acceso?',opts:[O('Sí, con control formal',1),O('Sí, sin control',.4),O('No',0)]},
+    {id:'co6',cat:'fuerza',dim:'p',q:'¿Se tiene protocolo ante visitas de alto perfil o situaciones de amenaza?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
+    {id:'co7',cat:'perimetro',dim:'i',q:'¿El estacionamiento y accesos vehiculares tienen seguridad?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co8',cat:'acceso',dim:'i',q:'¿Las áreas directivas tienen control de acceso diferenciado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co9',cat:'acceso',dim:'p',q:'¿Se realizan auditorías de acceso (quién entró, cuándo, a qué área)?',opts:[O('Sí, regularmente',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'co10',cat:'emergencias',dim:'p',q:'¿El personal tiene protocolo ante amenaza interna (robo, extorsión)?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co11',cat:'emergencias',dim:'p',q:'¿Existe un directorio de contactos de emergencia actualizado?',opts:[O('Sí',1),O('Desactualizado',.4),O('No',0)]},
+    {id:'co12',cat:'rrhh',dim:'h',q:'¿Se realizan evaluaciones de riesgo para personal directivo?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'co13',cat:'rrhh',dim:'h',q:'¿Las políticas de seguridad son comunicadas formalmente a todo el personal?',opts:[O('Sí, periódicamente',1),O('Solo al ingreso',.5),O('No',0)]},
+    {id:'co14',cat:'rrhh',dim:'p',q:'¿Se cuenta con protocolo ante pérdida de dispositivos corporativos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'co15',cat:'emergencias',dim:'p',q:'¿El edificio tiene plan de evacuación actualizado y señalizado?',opts:[O('Sí',1),O('Desactualizado',.4),O('No',0)]},
   ],
   retail:[
-    {id:'r1',cat:'acceso',q:'¿Existe un programa formal de prevención de pérdidas?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
-    {id:'r2',cat:'cctv',q:'¿Las áreas de caja y efectivo tienen supervisión directa o por CCTV?',opts:[O('Sí, ambas',1),O('Solo una',.5),O('No',0)]},
-    {id:'r3',cat:'acceso',q:'¿Se realizan arqueos o conteos de caja de forma regular?',opts:[O('Sí, diariamente',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'r4',cat:'rrhh',q:'¿El personal tiene capacitación para identificar comportamientos sospechosos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'r5',cat:'cctv',q:'¿Existen dispositivos antirrobo o espejos en áreas de productos?',opts:[O('Sí, en toda la tienda',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'r6',cat:'fuerza',q:'¿El traslado de efectivo tiene protocolo de seguridad?',opts:[O('Sí, empresa especializada',1),O('Sí, personal interno',.6),O('No hay protocolo',0)]},
-    {id:'r7',cat:'acceso',q:'¿El acceso a bodegas y almacenamiento está controlado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'r8',cat:'emergencias',q:'¿Existe protocolo ante robo en tienda (asalto, hurto)?',opts:[O('Sí, documentado',1),O('Conocido informalmente',.5),O('No',0)]},
-    {id:'r9',cat:'acceso',q:'¿Se revisan artículos devueltos para evitar fraudes?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No aplica',.8),O('No',0)]},
-    {id:'r10',cat:'fuerza',q:'¿La apertura y cierre del establecimiento tienen protocolo de seguridad?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'r11',cat:'acceso',q:'¿Se realizan inventarios frecuentes para detectar robo hormiga?',opts:[O('Sí, mensual o más',1),O('Trimestral',.6),O('Raramente',.2)]},
-    {id:'r12',cat:'fuerza',q:'¿El personal de seguridad es visible activamente en el piso de ventas?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No hay personal',0)]},
-    {id:'r13',cat:'perimetro',q:'¿Existe iluminación adecuada en todas las áreas del establecimiento?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'r14',cat:'fuerza',q:'¿Se realizan revisiones de salida al personal al término de turno?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'r15',cat:'emergencias',q:'¿El establecimiento tiene comunicación directa con policía o emergencias?',opts:[O('Sí, número directo',1),O('Solo 911',.5),O('No hay protocolo',0)]},
+    {id:'r1',cat:'acceso',dim:'p',q:'¿Existe un programa formal de prevención de pérdidas?',opts:[O('Sí',1),O('En proceso',.5),O('No',0)]},
+    {id:'r2',cat:'cctv',dim:'i',q:'¿Las áreas de caja y efectivo tienen supervisión directa o por CCTV?',opts:[O('Sí, ambas',1),O('Solo una',.5),O('No',0)]},
+    {id:'r3',cat:'acceso',dim:'p',q:'¿Se realizan arqueos o conteos de caja de forma regular?',opts:[O('Sí, diariamente',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'r4',cat:'rrhh',dim:'h',q:'¿El personal tiene capacitación para identificar comportamientos sospechosos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r5',cat:'cctv',dim:'i',q:'¿Existen dispositivos antirrobo o espejos en áreas de productos?',opts:[O('Sí, en toda la tienda',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r6',cat:'fuerza',dim:'p',q:'¿El traslado de efectivo tiene protocolo de seguridad?',opts:[O('Sí, empresa especializada',1),O('Sí, personal interno',.6),O('No hay protocolo',0)]},
+    {id:'r7',cat:'acceso',dim:'i',q:'¿El acceso a bodegas y almacenamiento está controlado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r8',cat:'emergencias',dim:'p',q:'¿Existe protocolo ante robo en tienda (asalto, hurto)?',opts:[O('Sí, documentado',1),O('Conocido informalmente',.5),O('No',0)]},
+    {id:'r9',cat:'acceso',dim:'p',q:'¿Se revisan artículos devueltos para evitar fraudes?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No aplica',.8),O('No',0)]},
+    {id:'r10',cat:'fuerza',dim:'p',q:'¿La apertura y cierre del establecimiento tienen protocolo de seguridad?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r11',cat:'acceso',dim:'p',q:'¿Se realizan inventarios frecuentes para detectar robo hormiga?',opts:[O('Sí, mensual o más',1),O('Trimestral',.6),O('Raramente',.2)]},
+    {id:'r12',cat:'fuerza',dim:'h',q:'¿El personal de seguridad es visible activamente en el piso de ventas?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No hay personal',0)]},
+    {id:'r13',cat:'perimetro',dim:'i',q:'¿Existe iluminación adecuada en todas las áreas del establecimiento?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'r14',cat:'fuerza',dim:'h',q:'¿Se realizan revisiones de salida al personal al término de turno?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'r15',cat:'emergencias',dim:'p',q:'¿El establecimiento tiene comunicación directa con policía o emergencias?',opts:[O('Sí, número directo',1),O('Solo 911',.5),O('No hay protocolo',0)]},
   ],
   logistica:[
-    {id:'l1',cat:'cctv',q:'¿Los vehículos cuentan con rastreo GPS activo?',opts:[O('Sí, toda la flotilla',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'l2',cat:'fuerza',q:'¿Se realizan revisiones de seguridad a los vehículos antes de cada salida?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'l3',cat:'fuerza',q:'¿Existe comunicación periódica entre operadores y base durante las rutas?',opts:[O('Sí, contacto periódico',1),O('Solo ante incidentes',.5),O('No',0)]},
-    {id:'l4',cat:'emergencias',q:'¿Se analizan las rutas para identificar zonas de riesgo?',opts:[O('Sí, regularmente',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'l5',cat:'rrhh',q:'¿Los operadores tienen capacitación ante situaciones de riesgo en tránsito?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'l6',cat:'emergencias',q:'¿Existe protocolo claro ante robo o asalto en tránsito?',opts:[O('Sí, documentado',1),O('Conocido informalmente',.5),O('No',0)]},
-    {id:'l7',cat:'acceso',q:'¿La carga es asegurada y verificada antes de salir de instalaciones?',opts:[O('Sí, siempre',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'l8',cat:'acceso',q:'¿Se controla quién tiene acceso a los vehículos y a las llaves?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'l9',cat:'emergencias',q:'¿Los vehículos cuentan con seguro vigente contra robo y siniestro?',opts:[O('Sí, todos',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'l10',cat:'emergencias',q:'¿Se documentan todos los incidentes ocurridos durante traslados?',opts:[O('Sí',1),O('Algunos',.5),O('No',0)]},
-    {id:'l11',cat:'rrhh',q:'¿Se realizan verificaciones de antecedentes a los operadores?',opts:[O('Sí, siempre',1),O('En algunos casos',.5),O('No',0)]},
-    {id:'l12',cat:'acceso',q:'¿El centro de distribución tiene control de acceso para vehículos externos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'l13',cat:'cctv',q:'¿Los vehículos cuentan con sistema de alerta o botón de pánico?',opts:[O('Sí, en todos',1),O('En algunos',.5),O('No',0)]},
-    {id:'l14',cat:'acceso',q:'¿Se verifican sellos o precintos de seguridad durante el trayecto?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No aplica',.8),O('No',0)]},
-    {id:'l15',cat:'emergencias',q:'¿Existe coordinación con autoridades para rutas de alto riesgo?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'l1',cat:'cctv',dim:'i',q:'¿Los vehículos cuentan con rastreo GPS activo?',opts:[O('Sí, toda la flotilla',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l2',cat:'fuerza',dim:'p',q:'¿Se realizan revisiones de seguridad a los vehículos antes de cada salida?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'l3',cat:'fuerza',dim:'p',q:'¿Existe comunicación periódica entre operadores y base durante las rutas?',opts:[O('Sí, contacto periódico',1),O('Solo ante incidentes',.5),O('No',0)]},
+    {id:'l4',cat:'emergencias',dim:'p',q:'¿Se analizan las rutas para identificar zonas de riesgo?',opts:[O('Sí, regularmente',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'l5',cat:'rrhh',dim:'h',q:'¿Los operadores tienen capacitación ante situaciones de riesgo en tránsito?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l6',cat:'emergencias',dim:'p',q:'¿Existe protocolo claro ante robo o asalto en tránsito?',opts:[O('Sí, documentado',1),O('Conocido informalmente',.5),O('No',0)]},
+    {id:'l7',cat:'acceso',dim:'p',q:'¿La carga es asegurada y verificada antes de salir de instalaciones?',opts:[O('Sí, siempre',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'l8',cat:'acceso',dim:'p',q:'¿Se controla quién tiene acceso a los vehículos y a las llaves?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l9',cat:'emergencias',dim:'p',q:'¿Los vehículos cuentan con seguro vigente contra robo y siniestro?',opts:[O('Sí, todos',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l10',cat:'emergencias',dim:'p',q:'¿Se documentan todos los incidentes ocurridos durante traslados?',opts:[O('Sí',1),O('Algunos',.5),O('No',0)]},
+    {id:'l11',cat:'rrhh',dim:'p',q:'¿Se realizan verificaciones de antecedentes a los operadores?',opts:[O('Sí, siempre',1),O('En algunos casos',.5),O('No',0)]},
+    {id:'l12',cat:'acceso',dim:'i',q:'¿El centro de distribución tiene control de acceso para vehículos externos?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'l13',cat:'cctv',dim:'i',q:'¿Los vehículos cuentan con sistema de alerta o botón de pánico?',opts:[O('Sí, en todos',1),O('En algunos',.5),O('No',0)]},
+    {id:'l14',cat:'acceso',dim:'p',q:'¿Se verifican sellos o precintos de seguridad durante el trayecto?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No aplica',.8),O('No',0)]},
+    {id:'l15',cat:'emergencias',dim:'p',q:'¿Existe coordinación con autoridades para rutas de alto riesgo?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
   ],
   otros:[
-    {id:'ot1',cat:'emergencias',q:'¿La organización ha sufrido algún incidente de seguridad en los últimos 12 meses?',opts:[O('No',1),O('Sí, menor',.5),O('Sí, significativo',0)]},
-    {id:'ot2',cat:'rrhh',q:'¿Existe una política de seguridad formal y documentada?',opts:[O('Sí, actualizada',1),O('Desactualizada',.4),O('No existe',0)]},
-    {id:'ot3',cat:'rrhh',q:'¿El personal conoce los protocolos básicos de seguridad y emergencias?',opts:[O('Sí, todo el personal',1),O('Algunos',.5),O('No',0)]},
-    {id:'ot4',cat:'acceso',q:'¿Se cuenta con alguna forma de control de acceso a las instalaciones?',opts:[O('Sí, electrónico/biométrico',1),O('Sí, manual',.5),O('No',0)]},
-    {id:'ot5',cat:'cctv',q:'¿Las instalaciones cuentan con videovigilancia?',opts:[O('Sí, con monitoreo',1),O('Sí, solo grabación',.5),O('No',0)]},
-    {id:'ot6',cat:'perimetro',q:'¿Existe iluminación perimetral en la noche?',opts:[O('Sí, completa',1),O('Parcial',.5),O('No',0)]},
-    {id:'ot7',cat:'rrhh',q:'¿Se realizan verificaciones de antecedentes al personal nuevo?',opts:[O('Sí, siempre',1),O('Algunas veces',.5),O('No',0)]},
-    {id:'ot8',cat:'fuerza',q:'¿Existe un responsable de seguridad designado dentro de la organización?',opts:[O('Sí, dedicado',1),O('Sí, función adicional',.6),O('No',0)]},
-    {id:'ot9',cat:'emergencias',q:'¿Se realizan auditorías o evaluaciones de seguridad periódicas?',opts:[O('Sí, anual o más frecuente',1),O('Raramente',.4),O('Nunca',0)]},
-    {id:'ot10',cat:'acceso',q:'¿Los activos de valor tienen protección específica?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'ot11',cat:'emergencias',q:'¿La organización cuenta con seguros vigentes contra robo o siniestro?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'ot12',cat:'emergencias',q:'¿Existe comunicación establecida con autoridades de seguridad locales?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
-    {id:'ot13',cat:'acceso',q:'¿Se controla formalmente el acceso de visitantes y proveedores?',opts:[O('Sí',1),O('Informalmente',.5),O('No',0)]},
-    {id:'ot14',cat:'rrhh',q:'¿El personal con acceso a activos críticos tiene perfil de riesgo evaluado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
-    {id:'ot15',cat:'emergencias',q:'¿La empresa tiene un plan de continuidad ante un incidente de seguridad?',opts:[O('Sí, documentado',1),O('En proceso',.5),O('No',0)]},
+    {id:'ot1',cat:'emergencias',dim:'p',q:'¿La organización ha sufrido algún incidente de seguridad en los últimos 12 meses?',opts:[O('No',1),O('Sí, menor',.5),O('Sí, significativo',0)]},
+    {id:'ot2',cat:'rrhh',dim:'p',q:'¿Existe una política de seguridad formal y documentada?',opts:[O('Sí, actualizada',1),O('Desactualizada',.4),O('No existe',0)]},
+    {id:'ot3',cat:'rrhh',dim:'h',q:'¿El personal conoce los protocolos básicos de seguridad y emergencias?',opts:[O('Sí, todo el personal',1),O('Algunos',.5),O('No',0)]},
+    {id:'ot4',cat:'acceso',dim:'i',q:'¿Se cuenta con alguna forma de control de acceso a las instalaciones?',opts:[O('Sí, electrónico/biométrico',1),O('Sí, manual',.5),O('No',0)]},
+    {id:'ot5',cat:'cctv',dim:'i',q:'¿Las instalaciones cuentan con videovigilancia?',opts:[O('Sí, con monitoreo',1),O('Sí, solo grabación',.5),O('No',0)]},
+    {id:'ot6',cat:'perimetro',dim:'i',q:'¿Existe iluminación perimetral en la noche?',opts:[O('Sí, completa',1),O('Parcial',.5),O('No',0)]},
+    {id:'ot7',cat:'rrhh',dim:'p',q:'¿Se realizan verificaciones de antecedentes al personal nuevo?',opts:[O('Sí, siempre',1),O('Algunas veces',.5),O('No',0)]},
+    {id:'ot8',cat:'fuerza',dim:'h',q:'¿Existe un responsable de seguridad designado dentro de la organización?',opts:[O('Sí, dedicado',1),O('Sí, función adicional',.6),O('No',0)]},
+    {id:'ot9',cat:'emergencias',dim:'p',q:'¿Se realizan auditorías o evaluaciones de seguridad periódicas?',opts:[O('Sí, anual o más frecuente',1),O('Raramente',.4),O('Nunca',0)]},
+    {id:'ot10',cat:'acceso',dim:'i',q:'¿Los activos de valor tienen protección específica?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'ot11',cat:'emergencias',dim:'p',q:'¿La organización cuenta con seguros vigentes contra robo o siniestro?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'ot12',cat:'emergencias',dim:'p',q:'¿Existe comunicación establecida con autoridades de seguridad locales?',opts:[O('Sí',1),O('Ocasionalmente',.5),O('No',0)]},
+    {id:'ot13',cat:'acceso',dim:'p',q:'¿Se controla formalmente el acceso de visitantes y proveedores?',opts:[O('Sí',1),O('Informalmente',.5),O('No',0)]},
+    {id:'ot14',cat:'rrhh',dim:'h',q:'¿El personal con acceso a activos críticos tiene perfil de riesgo evaluado?',opts:[O('Sí',1),O('Parcialmente',.5),O('No',0)]},
+    {id:'ot15',cat:'emergencias',dim:'p',q:'¿La empresa tiene un plan de continuidad ante un incidente de seguridad?',opts:[O('Sí, documentado',1),O('En proceso',.5),O('No',0)]},
   ],
 };
 
@@ -289,7 +289,13 @@ const BENCHMARK={
   logistica:{perimetro:62,acceso:60,fuerza:68,cctv:72,rrhh:58,emergencias:66},
   otros:{perimetro:60,acceso:58,fuerza:55,cctv:60,rrhh:52,emergencias:58},
 };
-const INTL={perimetro:80,acceso:78,fuerza:74,cctv:80,rrhh:72,emergencias:76};
+const INTL={
+  manufactura:{perimetro:82,acceso:80,fuerza:76,cctv:84,rrhh:74,emergencias:78},
+  corporativo:{perimetro:78,acceso:84,fuerza:72,cctv:80,rrhh:80,emergencias:82},
+  retail:     {perimetro:76,acceso:78,fuerza:80,cctv:84,rrhh:70,emergencias:74},
+  logistica:  {perimetro:74,acceso:76,fuerza:82,cctv:86,rrhh:72,emergencias:80},
+  otros:      {perimetro:72,acceso:74,fuerza:70,cctv:76,rrhh:68,emergencias:72},
+};
 
 const LEVELS={
   robusto:{label:'Robusto',bg:'rgba(0,180,100,.14)',br:'rgba(0,180,100,.3)',color:'#00C878'},
@@ -322,7 +328,15 @@ function calcScores(pid,ans,qs){
   });
   const ov=Math.round(Object.values(cs).reduce((a,b)=>a+b,0)/cats.length);
   const level=ov>=75?'robusto':ov>=50?'moderado':ov>=25?'elevado':'critico';
-  return{overall:ov,cats:cs,level,pid};
+  const ds={};
+  cats.forEach(c=>{
+    ds[c]={};
+    ['i','p','h'].forEach(d=>{
+      const dqs=qs.filter(q=>q.cat===c&&q.dim===d);
+      ds[c][d]=dqs.length?Math.round(dqs.reduce((a,q)=>a+(ans[q.id]??0),0)/dqs.length*100):cs[c];
+    });
+  });
+  return{overall:ov,cats:cs,dims:ds,level,pid};
 }
 
 function heatColor(v){
@@ -348,6 +362,7 @@ function buildDashboard(sc){
   const cta=CTAS[sc.level];
   const prof=PROFILES.find(p=>p.id===sc.pid);
   const bench=BENCHMARK[sc.pid];
+  const intl=INTL[sc.pid];
   const cats=Object.keys(CAT);
   const catVals=cats.map(c=>sc.cats[c]);
   const benchVals=cats.map(c=>bench[c]);
@@ -486,12 +501,7 @@ function buildDashboard(sc){
         ${dims.map(d=>`<div class="heat-hdr-lbl">${d}</div>`).join('')}
       </div>
       ${cats.map(c=>{
-        const base=sc.cats[c];
-        const vals=[
-          Math.min(100,Math.round(base*1.08)),
-          base,
-          Math.max(0,Math.round(base*0.92)),
-        ];
+        const vals=[sc.dims[c]['i'],sc.dims[c]['p'],sc.dims[c]['h']];
         return`<div class="heat-row">
           <div class="heat-cat">${CAT[c]}</div>
           ${vals.map(v=>{const hc=heatColor(v);return`<div class="heat-cell" style="background:${hc.bg};color:${hc.color}">${v}%</div>`}).join('')}
@@ -508,17 +518,17 @@ function buildDashboard(sc){
         <div class="bmark-legend-item"><div style="width:8px;height:2px;background:#3A5A8A;border-radius:1px;margin-top:3px"></div>Estándar internacional</div>
       </div>
       ${cats.map(c=>{
-        const you=sc.cats[c],ind=bench[c],intl=INTL[c];
+        const you=sc.cats[c],ind=bench[c],intlVal=intl[c];
         return`<div class="bmark-row">
           <div class="bmark-lbl">${CAT[c]}</div>
           <div class="bmark-track" style="height:6px;background:rgba(255,255,255,.06);border-radius:3px;position:relative;flex:1">
             <div style="height:100%;border-radius:3px;background:var(--cyan);width:${you}%;transition:width 1s ease"></div>
             <div style="position:absolute;top:-4px;left:${ind}%;width:2px;height:14px;background:#FF6B2B;border-radius:1px;opacity:.6"></div>
-            <div style="position:absolute;top:-2px;left:${intl}%;width:2px;height:10px;background:#3A5A8A;border-radius:1px"></div>
+            <div style="position:absolute;top:-2px;left:${intlVal}%;width:2px;height:10px;background:#3A5A8A;border-radius:1px"></div>
           </div>
           <div style="display:flex;align-items:center;gap:5px;min-width:100px">
             <span style="font-size:11px;font-weight:700;color:var(--cyan);min-width:28px;text-align:right">${you}%</span>
-            <span style="font-size:10px;color:var(--dim)">vs ${ind}% / ${intl}%</span>
+            <span style="font-size:10px;color:var(--dim)">vs ${ind}% / ${intlVal}%</span>
           </div>
         </div>`;
       }).join('')}
@@ -556,19 +566,24 @@ function buildDashboard(sc){
   setTimeout(()=>{
     const score=sc.overall/100;
     const r=80,cx=100,cy=100;
-    const startA=Math.PI; // left endpoint
-    const endA=startA+score*Math.PI; // progress along the 180° arc
-    const x1=cx+r*Math.cos(startA), y1=cy+r*Math.sin(startA); // (20,100)
-    const x2=cx+r*Math.cos(endA),   y2=cy+r*Math.sin(endA);
-    const large=0; // never exceeds 180°
     const arc=document.getElementById('gauge-arc');
-    if(arc)arc.setAttribute('d',`M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`);
+    if(!arc)return;
+    if(score<=0){arc.setAttribute('d','M 20.0 100.0 A 80 80 0 0 1 20.1 100.0');return;}
+    if(score>=1){arc.setAttribute('d','M 20.0 100.0 A 80 80 0 0 1 180.0 100.0');return;}
+    const startA=Math.PI;
+    const endA=startA+score*Math.PI;
+    const x1=cx+r*Math.cos(startA), y1=cy+r*Math.sin(startA);
+    const x2=cx+r*Math.cos(endA),   y2=cy+r*Math.sin(endA);
+    arc.setAttribute('d',`M ${x1.toFixed(1)} ${y1.toFixed(1)} A 80 80 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`);
   },120);
 }
 
 function goScreen(name){
-  STATE.screen=name;
-  if(name==='intro') STATE={screen:'intro',profile:null,questions:[],qi:0,answers:{}};
+  if(name==='intro'){
+    STATE={screen:'intro',profile:null,questions:[],qi:0,answers:{}};
+  } else {
+    STATE.screen=name;
+  }
   render();
 }
 
@@ -595,7 +610,8 @@ function submitForm(){
   const empresa=document.getElementById('f-empresa').value.trim();
 
   const emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const telOk=/^\d{10}$/.test(tel);
+  const ladaVal=document.getElementById('f-lada').value;
+  const telOk=ladaVal==='+52'?/^\d{10}$/.test(tel):/^\d{7,15}$/.test(tel);
 
   document.getElementById('err-email').style.display=(!email||!emailOk)?'block':'none';
   document.getElementById('err-tel').style.display=(!tel||!telOk)?'block':'none';
@@ -693,8 +709,7 @@ function render(){
         <div style="display:flex;gap:8px">
           <select id="f-lada" style="background:#111827;color:#e2e8f0;border:1px solid #1e293b;border-radius:8px;padding:10px 8px;font-size:13px;width:110px;flex-shrink:0;cursor:pointer;appearance:none;-webkit-appearance:none;text-align:center">
             <option value="+52">🇲🇽 +52</option>
-            <option value="+1">🇺🇸 +1</option>
-            <option value="+1">🇨🇦 +1</option>
+            <option value="+1">🇺🇸 🇨🇦 +1</option>
             <option value="+34">🇪🇸 +34</option>
             <option value="+55">🇧🇷 +55</option>
             <option value="+54">🇦🇷 +54</option>
@@ -707,7 +722,7 @@ function render(){
           </select>
           <input class="form-input" id="f-tel" type="tel" placeholder="8112345678" maxlength="10" style="flex:1">
         </div>
-        <div id="err-tel" style="display:none;color:#FF5050;font-size:11px;margin-top:5px">Ingresa un número de 10 dígitos.</div>
+        <div id="err-tel" style="display:none;color:#FF5050;font-size:11px;margin-top:5px">Ingresa un número de teléfono válido.</div>
       </div>
       <div class="form-group">
         <label class="form-label" for="f-empresa">Empresa <span style="color:#FF6B2B">*</span></label>
